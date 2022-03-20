@@ -9,7 +9,7 @@ while True:
     
     data_coms = dc.data_collection('/dev/ttyUSB0',
                                    './datasets/'+csv_name+f'_{i}.csv',
-                                   ['pot_val', 'digital_val'])
+                                   ['Sholder Angle', 'Elbow Angle'])
     print("Initializing data comms channel")
     time.sleep(3) # Gives time for data_coms to initialise
     

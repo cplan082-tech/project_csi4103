@@ -15,7 +15,7 @@ void setup() {
 
 
 void loop() {
-  if(digitalRead(pen_down_pin)){
+  if(digitalRead(pen_down_pin) == HIGH){
     digitalWrite(ledPin, HIGH); // visual indication (if statment has been reached)
     Serial.println(analogRead(shoulder_pin));
     Serial.println(analogRead(elbow_pin));
