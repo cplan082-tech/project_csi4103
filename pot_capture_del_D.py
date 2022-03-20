@@ -1,7 +1,7 @@
 import data_collection_class as dc
 import time
 
-csv_name = 'test'
+csv_name = 'second_trial'
 i = 1
 
 while True:
