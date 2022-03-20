@@ -1,7 +1,7 @@
 import data_collection_class as dc
 import time
 
-csv_name = 'pot_capture_dataset'
+csv_name = 'test'
 i = 1
 
 while True:
