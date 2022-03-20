@@ -19,7 +19,6 @@ void loop() {
     digitalWrite(ledPin, HIGH); // visual indication (if statment has been reached)
     Serial.println(analogRead(shoulder_pin));
     Serial.println(analogRead(elbow_pin));
-    delay(1000);
   }
   else{
     digitalWrite(ledPin, LOW);
