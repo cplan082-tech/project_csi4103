@@ -1,7 +1,13 @@
+# runn <sudo pigpiod> in shell first
+import os
+import sys
+
+sys.path.append(os.path.realpath('./base_project'))
+
 from brachiograph import BrachioGraph
 import data_collection_class as dc
 import time
-import RPi.GPIO as GPIO
+import RPi.GPIO as gpio
 
 # interupt on Arduino vvvvvvvvvvvvvvv
 arduino_int0_trig_pin = 16
