@@ -1,4 +1,5 @@
 import data_collection_class as dc
+import time
 
 csv_name = 'pot_capture_dataset'
 i = 1
