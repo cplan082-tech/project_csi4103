@@ -54,6 +54,7 @@ def angles_to_xy(rows):
 def main():
     rows = read_csv_file('angles.csv') #change name to actual file name
     angles_to_xy(rows)
+    return 
 
 if __name__ == "__main__":
 	main()
