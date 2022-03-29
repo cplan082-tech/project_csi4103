@@ -15,14 +15,14 @@ void setup() {
 
 
 void loop() {
-  if(digitalRead(pen_down_pin) == HIGH){
-    digitalWrite(ledPin, HIGH); // visual indication (if statment has been reached)
+  if(digitalRead(pen_down_pin) == HIGH){ // Data captured only when button is pressed
+    digitalWrite(ledPin, HIGH); // visual indication (button has been pressed)
     Serial.println(analogRead(shoulder_pin));
     Serial.println(analogRead(elbow_pin));
-    delay(1000);
+    delay(1000); // Controls flow of captured datapoints
   }
   else{
-    digitalWrite(ledPin, LOW);
+    digitalWrite(ledPin, LOW);// visual indication (button has NOT been pressed)
   }
 
 }
