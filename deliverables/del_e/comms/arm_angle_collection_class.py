@@ -10,9 +10,9 @@ class arm_angle_collection:
     def angle_request(self):
         self.ser.reset_input_buffer()
         msg_b = bytes("Status", 'utf-8')
-        ser.write(msg_b)
-        self.shoulder = int(ser.readline().decode("utf-8").strip())
-        self.elbow = int(ser.readline().decode("utf-8").strip())
+        self.ser.write(msg_b + b'\n')
+        self.shoulder = int(self.ser.readline().decode("utf-8").strip())
+        self.elbow = int(self.ser.readline().decode("utf-8").strip())
         
         return self.shoulder, self.elbow
         
