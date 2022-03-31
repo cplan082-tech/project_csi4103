@@ -3,8 +3,10 @@ import sys
 
 sys.path.append(os.path.realpath('../../../base_project'))
 
-from brachiograph import BrachioGraph
+from BrachioGraphError import BrachioGraphError
 
-bg = BrachioGraph()
+bg = BrachioGraphError()
 
 bg.park()
+
+bg.plot_file("circle.json")
