@@ -57,7 +57,13 @@ class BrachioGraphError(BrachioGraph):
         """
         Error Correction Wrapper Code Here - Loop Function
 
+        #get pot value
 
+        #get pot2angle
+
+        #calculate error
+
+        #depending on error, either do nothing or recall function with new angles
 
         """
 
