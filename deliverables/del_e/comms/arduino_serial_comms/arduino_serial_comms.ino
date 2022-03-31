@@ -27,7 +27,7 @@ void loop() {
 
 }
 
-
+// Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 void serialEvent(){ // function that handles incoming transmissions
   while(Serial.available()){ // while transmission is taking place
     char inChar = (char)Serial.read(); // cast input byte string to character
@@ -37,3 +37,4 @@ void serialEvent(){ // function that handles incoming transmissions
     }
   }
 }
+// reused from lab 6^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
