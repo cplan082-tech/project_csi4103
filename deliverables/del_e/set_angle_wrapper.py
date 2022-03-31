@@ -1,18 +1,20 @@
  import time
- import arm_angle_collection_class as arm 
- 
+ import arm_angle_collection_class as arm
+
  obj_arm = arm.arm_angle_collection()
- 
+
  def proportional_controller(set_point, process_variable):
      Kp = 0.8 #proportional gain
      error = set_point - process_variable
      output = Kp * error
      return output
-    
- 
+
+
 def set_angles(self, angle_1 = None, angle_2=None):
- 
- 
+
+    shoulder_angle_anchor = angle_1
+    elbow_angle_anchor = angle_2
+
      def set_angles_wrapped(self, angle_1, angle_2):
         """Moves the servo motors to the specified angles immediately. Relies upon getting accurate pulse-width
         values.
@@ -63,33 +65,38 @@ def set_angles(self, angle_1 = None, angle_2=None):
 
         self.set_pulse_widths(pw_1, pw_2)
         self.x, self.y = self.angles_to_xy(self.angle_1, self.angle_2)
- 
-        return self.angle_1, self.angle_2
-     
-     
-    # get pot angles       
-    shoulder_pot, elbow_pot = obj_arm.angle_request()
- 
-    # compare pots angles and servo angles
-    shoulder_angle, elbow_angle = set_angles_wrapped(angle_1, angle_2)
 
-    # calculate error 
-    shoulder_error  = shoulder_angle - shoulder_pot
-    elbow_error = elbow_angle - elbow_pot
+        return
+
+
+    # get pot values
+    shoulder_pot, elbow_pot = obj_arm.angle_request()
+
+    #get pot angles
+    shoulder_pot, elbow_pot = #function(shoulder_pot,elbow_pot)
+
+    # compare pots angles and servo angles
+    set_angles_wrapped(angle_1, angle_2)
+
+    # calculate error
+    shoulder_error  = shoulder_angle_anchor - shoulder_pot
+    elbow_error = elbow_angle_anchor - elbow_pot
+
+    #set variables for P controller
+    shoulder_angle = shoulder_angle_anchor
+    elbow_angle = elbow_angle_anchor
 
     # determine if error is acceptable (for now, test with 1 degree error maximum)
     while (shoulder_error > 1 or elbow_error > 1):
-            
+
             if (shoulder_error > 1):
-                shoulder_angle = shoulder_angle + proportional_controller(shoulder_pot, shoulder_angle)
-            
+                shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
+
             if (shoulder_error > 1):
-                elbow_angle = elbow_angle + proportional_controller(elbow_pot, elbow_angle)
-            
-            set_angles_wrapped(shoulder_angle, elbow_angle)  
- 
-            # calculate error 
-            shoulder_error  = shoulder_angle - shoulder_pot
-            elbow_error = elbow_angle - elbow_pot
- 
-    
+                elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
+
+            set_angles_wrapped(shoulder_angle, elbow_angle)
+
+            # calculate error
+            shoulder_error  = shoulder_angle_anchor - shoulder_pot
+            elbow_error = elbow_angle_anchor - elbow_pot
