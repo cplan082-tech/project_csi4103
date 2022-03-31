@@ -8,69 +8,45 @@ from brachiograph import BrachioGraph
 class BrachioGraphError(BrachioGraph):
 
     #Modify to use our code
-    def set_angles(self, angle_1=None, angle_2=None):
-        """Moves the servo motors to the specified angles immediately. Relies upon getting accurate pulse-width
-        values.
-        Calls set_pulse_widths().
-        Sets current_x, current_y.
-        """
+    def xy(self, x=None, y=None, wait=0, interpolate=10, draw=False):
+        """Moves the pen to the xy position; optionally draws while doing it."""
 
-        pw_1 = pw_2 = None
+        wait = wait or self.wait
 
-        if angle_1 is not None:
-            pw_1 = self.angles_to_pw_1(angle_1)
+        if draw:
+            self.pen.down()
+        else:
+            self.pen.up()
 
-            if pw_1 > self.previous_pw_1:
-                self.active_hysteresis_correction_1 = self.hysteresis_correction_1
-            elif pw_1 < self.previous_pw_1:
-                self.active_hysteresis_correction_1 = - self.hysteresis_correction_1
+        x = x or self.x
+        y = y or self.y
 
-            self.previous_pw_1 = pw_1
+        (angle_1, angle_2) = self.xy_to_angles(x, y)
 
-            pw_1 = pw_1 + self.active_hysteresis_correction_1
+        # calculate how many steps we need for this move, and the x/y length of each
+        (x_length, y_length) = (x - self.x, y - self.y)
 
-            self.angle_1 = angle_1
-            self.angles_used_1.add(int(angle_1))
-            self.pulse_widths_used_1.add(int(pw_1))
+        length = math.sqrt(x_length ** 2 + y_length **2)
 
-        if angle_2 is not None:
-            pw_2 = self.angles_to_pw_2(angle_2)
+        no_of_steps = int(length * interpolate) or 1
 
-            if pw_2 > self.previous_pw_2:
-                self.active_hysteresis_correction_2 = self.hysteresis_correction_2
-            elif pw_2 < self.previous_pw_2:
-                self.active_hysteresis_correction_2 = - self.hysteresis_correction_2
+        if no_of_steps < 100:
+            disable_tqdm = True
+        else:
+            disable_tqdm = False
 
-            self.previous_pw_2 = pw_2
+        (length_of_step_x, length_of_step_y) = (x_length/no_of_steps, y_length/no_of_steps)
 
-            pw_2 = pw_2 + self.active_hysteresis_correction_2
+        for step in tqdm.tqdm(range(no_of_steps), desc='Interpolation', leave=False, disable=disable_tqdm):
 
-            self.angle_2 = angle_2
-            self.angles_used_2.add(int(angle_2))
-            self.pulse_widths_used_2.add(int(pw_2))
+            self.x = self.x + length_of_step_x
+            self.y = self.y + length_of_step_y
 
-        if self.turtle:
+            angle_1, angle_2 = self.xy_to_angles(self.x, self.y)
 
-            x, y = self.angles_to_xy(self.angle_1, self.angle_2)
+            self.set_angles(angle_1, angle_2)
 
-            self.turtle.setx(x * self.turtle.multiplier)
-            self.turtle.sety(y * self.turtle.multiplier)
+            if step + 1 < no_of_steps:
+                sleep(length * wait/no_of_steps)
 
-
-        self.set_pulse_widths(pw_1, pw_2) # This moves the servos to the desired location
-
-        """
-        Error Correction Wrapper Code Here - Loop Function
-
-        #get pot value
-
-        #get pot2angle
-
-        #calculate error
-
-        #depending on error, either do nothing or recall function with new angles
-
-        """
-
-
-        self.x, self.y = self.angles_to_xy(self.angle_1, self.angle_2)
+        sleep(length * wait/10)
