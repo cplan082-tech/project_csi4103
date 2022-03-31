@@ -1,0 +1,5 @@
+    def proportional_controller(set_point, process_variable):
+        Kp = 0.8 #proportional gain
+        error = set_point - process_variable
+        output = Kp * error
+        return output
