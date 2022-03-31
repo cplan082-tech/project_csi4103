@@ -51,5 +51,15 @@ class BrachioGraphError(BrachioGraph):
             self.turtle.setx(x * self.turtle.multiplier)
             self.turtle.sety(y * self.turtle.multiplier)
 
-        self.set_pulse_widths(pw_1, pw_2)
+
+        self.set_pulse_widths(pw_1, pw_2) # This moves the servos to the desired location
+
+        """
+        Error Correction Wrapper Code Here - Loop Function
+
+
+
+        """
+
+
         self.x, self.y = self.angles_to_xy(self.angle_1, self.angle_2)
