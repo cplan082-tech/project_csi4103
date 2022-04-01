@@ -1,8 +1,8 @@
 import os
 import sys
 
-# path might be wrong
-import arm_angle_collection_class as arm
+import arm_angle_collection_class as arm # path might be wrong
+import pot2angle # path might be wrong
 
 obj_arm = arm.arm_angle_collection()
 
@@ -81,8 +81,9 @@ class BrachioGraphError(BrachioGraph):
         # get pot values
         shoulder_pot, elbow_pot = obj_arm.angle_request()
 
-        #get pot angles
-        shoulder_pot, elbow_pot = #function(shoulder_pot,elbow_pot)
+        #get pot angles - THIS HAS TO BE TESTED
+        shoulder_pot = shoulder_motor_angle(shoulder_pot)
+        elbow_pot = elbow_angle(elbow_pot)
 
         # compare pots angles and servo angles
         set_angles_wrapped(angle_1, angle_2)
