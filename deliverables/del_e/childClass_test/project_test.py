@@ -12,9 +12,12 @@ from custom import bg
 #     servo_2_parked_pw=1350)
 
 
-bg.set_angles(-90,80)
-time.sleep(3)
+bg.park()
+time.sleep(1)
 
+bg.box(bounds=[-6, 11, 6, 20]) # largest rectangle at center, hypotenuse = 15.620
+
+time.sleep(1)
 bg.park()
 
 # bg.plot_file("circle.json")
