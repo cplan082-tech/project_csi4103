@@ -22,5 +22,5 @@ sys.path.append(os.path.realpath('../../../base_project'))
 
 from brachiograph import BrachioGraph
 bg = BrachioGraph(
-    servo_1_parked_pw=1475,
-    servo_2_parked_pw=1350)
+    servo_1_parked_pw=1525,
+    servo_2_parked_pw=1500)
