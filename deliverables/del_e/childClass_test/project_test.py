@@ -15,7 +15,8 @@ from custom import bg
 bg.park()
 time.sleep(1)
 
-bg.box(bounds=[-6, 11, 6, 20]) # largest rectangle at center, hypotenuse = 15.620
+#bg.box(bounds=[-6, 11, 6, 20]) # largest rectangle at center, hypotenuse = 15.620
+bg.test_pattern(both=True) # hysteresis correcton test call
 
 time.sleep(1)
 bg.park()
