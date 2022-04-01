@@ -23,7 +23,7 @@ while True:
     input("start test")
     data_coms = dc.data_collection('/dev/ttyACM0',
                                    './datasets/'+csv_name+f'_{i}.csv',
-                                   ['analog_read'])
+                                   ['Shoulder', 'Elbow'])
     time.sleep(2) # Gives time for data_coms to initialise
     
     bg.park()
