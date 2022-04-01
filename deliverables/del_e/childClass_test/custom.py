@@ -26,4 +26,6 @@ bg = BrachioGraph(
     outer_arm=11,
     bounds=[-5, 10, 5, 20],
     servo_1_parked_pw=1525,
-    servo_2_parked_pw=1500)
+    servo_2_parked_pw=1500,
+    hysteresis_correction_1=12,
+    hysteresis_correction_2=12)
