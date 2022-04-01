@@ -24,7 +24,7 @@ from brachiograph import BrachioGraph
 bg = BrachioGraph(
     inner_arm=10,
     outer_arm=11,
-    bounds=[-5, 10, 5, 20],
+    bounds=[-6, 11, 6, 20],
     servo_1_parked_pw=1525,
     servo_2_parked_pw=1500,
     hysteresis_correction_1=12,

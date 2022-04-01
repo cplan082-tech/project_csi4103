@@ -5,20 +5,36 @@
 
 # from BrachioGraphError import BrachioGraphError
 import time
+import RPi.GPIO as GPIO
+import data_collection_class as dc
 from custom import bg
-
-# bg = BrachioGraphError(
-#     servo_1_parked_pw=1475,
-#     servo_2_parked_pw=1350)
+arduino_int0_trig_pin = 4
 
 
-bg.park()
-time.sleep(1)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
+GPIO.output(arduino_int0_trig_pin, False)
 
-#bg.box(bounds=[-6, 11, 6, 20]) # largest rectangle at center, hypotenuse = 15.620
-bg.test_pattern(both=True) # hysteresis correcton test call
+csv_name = 'hyster_dataset_clean'
+i = 1
 
-time.sleep(1)
-bg.park()
-
-# bg.plot_file("circle.json")
+while True:
+    input("start test")
+    data_coms = dc.data_collection('/dev/ttyACM0',
+                                   './datasets/'+csv_name+f'_{i}.csv',
+                                   ['analog_read'])
+    time.sleep(2) # Gives time for data_coms to initialise
+    
+    bg.park()
+    time.sleep(1)
+    
+    GPIO.output(arduino_int0_trig_pin, True)
+    bg.test_pattern(both=True) # hysteresis correcton test call
+    GPIO.output(arduino_int0_trig_pin, False)
+    data_coms.stop_listening()
+    
+    bg.park()
+    i+=1
+    
+    # bg.plot_file("circle.json")
