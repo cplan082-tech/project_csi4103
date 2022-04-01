@@ -1091,7 +1091,7 @@ class Pen:
         sleep(0.3)
 
 
-    def down(self):
+    def up(self):
 
         if self.virtual:
             self.virtual_pw = self.pw_down
@@ -1108,7 +1108,7 @@ class Pen:
         self.position = "down"
 
 
-    def up(self):
+    def down(self):
 
         if self.virtual:
             self.virtual_pw = self.pw_up
