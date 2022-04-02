@@ -8,11 +8,11 @@ import time
 import RPi.GPIO as GPIO
 import data_collection_class as dc
 from custom import bg
-arduino_int0_trig_pin = 4
+arduino_int0_trig_pin = 40
 
 
 GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
 GPIO.output(arduino_int0_trig_pin, False)
 
