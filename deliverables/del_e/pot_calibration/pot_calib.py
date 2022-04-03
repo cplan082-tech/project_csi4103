@@ -7,7 +7,7 @@
 import time
 import RPi.GPIO as GPIO
 import data_collection_class as dc
-from custom import bg
+#from custom import bg
 csv_name = 'pot_cal_dataset_clean'
 i = 1
 
