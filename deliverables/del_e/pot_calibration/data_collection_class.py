@@ -35,7 +35,8 @@ class data_collection:
         try:
             data = [(float(self.ser.readline().decode('utf-8').rstrip())) for _ in range(len(self.cols))]
         except:
-            data = [None for _ in range(len(self.cols))]
+           self.ser.reset_input_buffer() 
+#             data = [None for _ in range(len(self.cols))]
 #         print(data)
         df_temp = pd.DataFrame(np.array(data).reshape(1,-1),
                               columns=self.cols) # concats new data to dataframe
@@ -46,6 +47,7 @@ class data_collection:
     def waiting_for_data(self):
         self.ser.reset_input_buffer() # resets input buffer before starting thread
         while self.running: # runs while self.running = True
+            
             if (self.ser.in_waiting > 0): # if serial input buffer has data, trigger pack_data() method
                 self.pack_data()
     
