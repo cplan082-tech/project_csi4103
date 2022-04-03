@@ -20,8 +20,8 @@ void setup() {
 void loop() {
   if(digitalRead(pen_down_pin) == HIGH){ // Data captured only when button is pressed
     digitalWrite(ledPin, HIGH); // visual indication (button has been pressed)
-    Serial.println(analogRead(shoulder_pin));
-    Serial.println(analogRead(elbow_pin));
+    Serial.println(analogRead(shoulder_pin)+" "+analogRead(elbow_pin));
+   // Serial.println(analogRead(elbow_pin));
     //delay(1000); // Controls flow of captured datapoints
   }
   else{
