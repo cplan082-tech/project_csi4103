@@ -33,9 +33,9 @@ class data_collection:
         
         # Creates a list were the number of elements is equal to the number of columns of the df
         try:
-            data = [(float(self.ser.readline().decode('utf-8').rstrip())) for _ in range(len(self.cols))]
+            data = [float(i) for i in self.ser.readline().decode('utf-8').rstrip().split("-")]
+#             data = [(float(self.ser.readline().decode('utf-8').rstrip().split("-"))) for _ in range(len(self.cols))]
         except:
-            self.ser.reset_input_buffer() 
             data = [None for _ in range(len(self.cols))]
 #         print(data)
         df_temp = pd.DataFrame(np.array(data).reshape(1,-1),
