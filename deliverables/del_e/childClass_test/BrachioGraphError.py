@@ -1,13 +1,13 @@
 import os
 import sys
 
+sys.path.append(os.path.realpath('../../../base_project'))
+sys.path.append(os.path.realpath('../comms'))
+
 import arm_angle_collection_class as arm # path might be wrong
 import pot2angle # path might be wrong
 
 obj_arm = arm.arm_angle_collection()
-
-sys.path.append(os.path.realpath('../../../base_project'))
-sys.path.append(os.path.realpath('../comms'))
 
 from brachiograph import BrachioGraph
 
