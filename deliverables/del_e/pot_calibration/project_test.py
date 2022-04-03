@@ -21,9 +21,9 @@ i = 5
 
 while True:
     input("start test")
-    data_coms = dc.data_collection('/dev/ttyACM0',
-                                   './datasets/'+csv_name+f'_{i}.csv',
-                                   ['Shoulder', 'Elbow'])
+#    data_coms = dc.data_collection('/dev/ttyACM0',
+#                                   './datasets/'+csv_name+f'_{i}.csv',
+#                                   ['Shoulder', 'Elbow'])
     
     bg.park()
     time.sleep(1)
@@ -33,7 +33,7 @@ while True:
     time.sleep(1)
     # bg.test_pattern(both=True) # hysteresis correcton test call
     bg.plot_file("circle.json")
-    data_coms.stop_listening()
+#    data_coms.stop_listening()
     GPIO.output(arduino_int0_trig_pin, False)
     
     bg.park()
