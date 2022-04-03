@@ -3,6 +3,8 @@ const int elbow_pin = A1;
 const int pen_down_pin = 3; 
 const int ledPin =  13; //https://www.arduino.cc/en/Tutorial/BuiltInExamples/Button
 
+String shoulder = "";
+String elbow = "";
 
 void setup() {
   pinMode(shoulder_pin, INPUT);
@@ -20,9 +22,10 @@ void setup() {
 void loop() {
   if(digitalRead(pen_down_pin) == HIGH){ // Data captured only when button is pressed
     digitalWrite(ledPin, HIGH); // visual indication (button has been pressed)
-    Serial.print(analogRead(shoulder_pin));
-    Serial.print("-")
-    Serial.println(analogRead(elbow_pin));
+    shoulder = String(analogRead(shoulder_pin));
+    elbow = String(analogRead(elbow_pin));
+ 
+    Serial.println(shoulder+"-"+elbow);
     //delay(1000); // Controls flow of captured datapoints
   }
   else{
