@@ -17,7 +17,7 @@ GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
 GPIO.output(arduino_int0_trig_pin, False)
 
 csv_name = 'hyster_dataset_clean'
-i = 4
+i = 5
 
 while True:
     input("start test")
