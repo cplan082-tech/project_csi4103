@@ -30,7 +30,7 @@ while True:
     data_coms = dc.data_collection('/dev/ttyACM0',
                                    './datasets/'+csv_name+f'_{i}.csv',
                                    ['Shoulder', 'Elbow'])
-    time.sleep(2) # Gives time for data_coms to initialise
+    time.sleep(3) # Gives time for data_coms to initialise
     
     print("putting pen down")
     bg.pen.down()

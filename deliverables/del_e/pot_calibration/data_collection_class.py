@@ -12,10 +12,11 @@ class data_collection:
         self.lock = threading.Lock() # Create thread locking object
         self.cols = cols
         self.df = pd.DataFrame(columns=cols) # creates empty dataframe
-        print('starting comms thread')
+        print('starting comms thread, please wait')
         self.running = True # used to enable or disable the thread (when True, loops to infinity)
         self.listen_thread = threading.Thread(target=self.waiting_for_data)
         self.listen_thread.start() # starts thread
+        time.sleep(3) # Gives time for data_coms to initialise
         
     def pack_data(self):
         self.lock.acquire() # prevents thread from terminating during data aquisition
