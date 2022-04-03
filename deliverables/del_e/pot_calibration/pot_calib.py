@@ -14,7 +14,8 @@ i = 2
 
 data_coms = dc.data_collection('/dev/ttyACM0',
                                './datasets/'+csv_name+f'_{i}.csv',
-                               ['Shoulder', 'Elbow'])
+                               ['Shoulder', 'Elbow'],
+                               baud=14400)
 time.sleep(2) # Gives time for data_coms to initialise
 
 input("Hit enter when done test")

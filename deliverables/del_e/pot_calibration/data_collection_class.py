@@ -7,11 +7,11 @@ import sys
 import numpy as np
 
 class data_collection:
-    def __init__(self, coms_chan, ouput_csv, cols, ser_delay=3):
+    def __init__(self, coms_chan, ouput_csv, cols, ser_delay=3, baud=9600):
         self.ser_delay = ser_delay
         self.ouput_csv = ouput_csv # name of output csv file
         time.sleep(1) # prevents serial connection from reading "" when called repetedly
-        self.ser = serial.Serial(coms_chan, 9600, timeout=30) # establish comms connection
+        self.ser = serial.Serial(coms_chan, baud, timeout=30) # establish comms connection
         self.lock = threading.Lock() # Create thread locking object
         self.cols = cols
         self.df = pd.DataFrame(columns=cols) # creates empty dataframe
