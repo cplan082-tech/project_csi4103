@@ -10,6 +10,9 @@ void setup() {
   pinMode(pen_down_pin, INPUT);
   pinMode(ledPin, OUTPUT); //https://www.arduino.cc/en/Tutorial/BuiltInExamples/Button
   Serial.begin(9600);
+  while(!Serial){ // wait for reial communications between arduino and pi to be established
+    ;
+  }
 
 }
 
