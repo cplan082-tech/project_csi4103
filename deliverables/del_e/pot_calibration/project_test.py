@@ -17,14 +17,13 @@ GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
 GPIO.output(arduino_int0_trig_pin, False)
 
 csv_name = 'hyster_dataset_clean'
-i = 2
+i = 4
 
 while True:
     input("start test")
     data_coms = dc.data_collection('/dev/ttyACM0',
                                    './datasets/'+csv_name+f'_{i}.csv',
                                    ['Shoulder', 'Elbow'])
-    time.sleep(3) # Gives time for data_coms to initialise
     
     bg.park()
     time.sleep(1)
@@ -32,8 +31,8 @@ while True:
     GPIO.output(arduino_int0_trig_pin, True)
     # bg.test_pattern(both=True) # hysteresis correcton test call
     bg.plot_file("circle.json")
-    GPIO.output(arduino_int0_trig_pin, False)
     data_coms.stop_listening()
+    GPIO.output(arduino_int0_trig_pin, False)
     
     bg.park()
     i+=1

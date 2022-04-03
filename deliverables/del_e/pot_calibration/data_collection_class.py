@@ -17,14 +17,13 @@ class data_collection:
         self.df = pd.DataFrame(columns=cols) # creates empty dataframe
         print("\n")
         print('starting comms thread, please wait')
-#         self.ser.reset_input_buffer() # resets input buffer before starting thread
         self.running = True # used to enable or disable the thread (when True, loops to infinity)
         self.listen_thread = threading.Thread(target=self.waiting_for_data)
         self.listen_thread.start() # starts thread
-        for _ in range(30):
+        print("."*30)
+        for _ in range(30): # Gives time for thread to initialize
             sys.stdout.write(".")
             sys.stdout.flush()
-#             print(".")
             time.sleep(self.ser_delay/30)
         print("\nComms thread started")
         print("\n")
@@ -55,9 +54,7 @@ class data_collection:
         print('data converted to csv')
         self.running = False # terminated comms thread
         print("\n")
-#         print("Terminating comms thread, please wait")
         self.lock.release()
-#         time.sleep(self.ser_delay)
         print('Comms thread terminated')
         print("\n")
                 
