@@ -7,22 +7,38 @@ import pot2angle # path might be wrong
 obj_arm = arm.arm_angle_collection()
 
 sys.path.append(os.path.realpath('../../../base_project'))
+sys.path.append(os.path.realpath('../comms'))
 
 from brachiograph import BrachioGraph
 
 class BrachioGraphError(BrachioGraph):
 
+    def map_func(x, in_min, in_max, out_min, out_max):
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+    
+    def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=865, elbow_max=261,
+                  shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=145):
+        
+        # convertes first column (shoulder) to angles between -90 and 0
+        lst[0] = map_func(lst[0], shoulder_min, soulder_max, shoulder_min_angle, shoudler_max_angle)
+        
+        # convertes second column (elbow) to angles between 0 and 160
+        lst[1] = map_func(lst[1], elbow_min, elbow_max, elbow_min_angle, elbow_max_angle)
+        return lst
+    
     def proportional_controller(set_point, process_variable):
-         Kp = 0.8 #proportional gain
+         Kp = 0.1 #proportional gain
          error = set_point - process_variable
          output = Kp * error
          return output
+         
 
     #Modified to use error correction
     def set_angles(self, angle_1 = None, angle_2=None):
 
         shoulder_angle_anchor = angle_1
         elbow_angle_anchor = angle_2
+        error_eps = 1
 
          def set_angles_wrapped(self, angle_1, angle_2):
             """Moves the servo motors to the specified angles immediately. Relies upon getting accurate pulse-width
@@ -78,16 +94,19 @@ class BrachioGraphError(BrachioGraph):
             return
 
 
+        # calls get_angle for the first time
+        set_angles_wrapped(angle_1, angle_2)
+        
         # get pot values
         shoulder_pot, elbow_pot = obj_arm.angle_request()
 
-        #get pot angles - THIS HAS TO BE TESTED
-        shoulder_pot = shoulder_motor_angle(shoulder_pot)
-        elbow_pot = elbow_angle(elbow_pot)
-
-        # compare pots angles and servo angles
-        set_angles_wrapped(angle_1, angle_2)
-
+        #Convert pot ADC values to angles - THIS HAS TO BE TESTED
+#         shoulder_pot = shoulder_motor_angle(shoulder_pot)
+#         elbow_pot = elbow_angle(elbow_pot)
+        lst_angles = adc2angle([shoulder_pot, elbow_pot])
+        shoulder_pot = lst_angles[0]
+        elbow_pot = lst_angles[1]
+        
         # calculate error
         shoulder_error  = shoulder_angle_anchor - shoulder_pot
         elbow_error = elbow_angle_anchor - elbow_pot
@@ -97,15 +116,23 @@ class BrachioGraphError(BrachioGraph):
         elbow_angle = elbow_angle_anchor
 
         # determine if error is acceptable (for now, test with 1 degree error maximum)
-        while (shoulder_error > 1 or elbow_error > 1):
+        while (shoulder_error > error_eps or elbow_error > error_eps):
 
-                if (shoulder_error > 1):
+                if (shoulder_error > error_eps):
                     shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
 
-                if (shoulder_error > 1):
+                if (shoulder_error > error_eps):
                     elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
 
                 set_angles_wrapped(shoulder_angle, elbow_angle)
+                
+                # get pot values
+                shoulder_pot, elbow_pot = obj_arm.angle_request()
+                
+                # convert pot ADC values to angles
+                lst_angles = adc2angle([shoulder_pot, elbow_pot])
+                shoulder_pot = lst_angles[0]
+                elbow_pot = lst_angles[1]
 
                 # calculate error
                 shoulder_error  = shoulder_angle_anchor - shoulder_pot
