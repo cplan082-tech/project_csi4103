@@ -11,7 +11,7 @@ def read_csv_file(name):
 
     "Populates array with rows from CSV [[shoulder_angle_1,elbow_angle_2],...]"
     rows = []
-    for row in csvreader: 
+    for row in csvreader:
         rows.append(row)
 
     file.close()
@@ -19,17 +19,17 @@ def read_csv_file(name):
 
 def angles_to_xy(rows):
 
-    inner_arm = 8 # in cm, from prototype
-    outer_arm = 8 # in cm, from prototype
+    inner_arm = 10 # in cm, from prototype
+    outer_arm = 11 # in cm, from prototype
 
     header = ['X', 'Y']
     data = [] # empty array to store X,Y coordinates
-    
+
     for elements in rows:
-        
+
         shoulder_motor_angle = float(elements[0])
         elbow_motor_angle = float(elements[1])
-        
+
         """Return the x/y co-ordinates represented by a pair of servo angles."""
 
         elbow_motor_angle = math.radians(elbow_motor_angle)
@@ -43,7 +43,7 @@ def angles_to_xy(rows):
         x = math.sin(inner_angle) * hypotenuse
         y = math.cos(inner_angle) * hypotenuse
         data.append([x,y])
-        
+
     filename = 'xycoordinates.csv' # create new file to store CSV - IT WILL OVERWRITE EXISTING FILES OF THE SAME NAME
     with open(filename, 'w', newline="") as file:
         csvwriter = csv.writer(file)
@@ -51,10 +51,10 @@ def angles_to_xy(rows):
         csvwriter.writerows(data)
     return
 
-def main():
-    rows = read_csv_file('angles.csv') #change name to actual file name
+def main(filename):
+    rows = read_csv_file(filename) #change name to actual file name
     angles_to_xy(rows)
-    return 
+    return
 
 if __name__ == "__main__":
 	main()
