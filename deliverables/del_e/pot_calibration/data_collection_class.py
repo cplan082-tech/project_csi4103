@@ -32,7 +32,10 @@ class data_collection:
         self.lock.acquire() # prevents thread from terminating during data aquisition
         
         # Creates a list were the number of elements is equal to the number of columns of the df
-        data = [(float(self.ser.readline().decode('utf-8').rstrip())) for _ in range(len(self.cols))]
+        try:
+            data = [(float(self.ser.readline().decode('utf-8').rstrip())) for _ in range(len(self.cols))]
+        except:
+            data = [None for _ in range(len(self.cols))]
 #         print(data)
         df_temp = pd.DataFrame(np.array(data).reshape(1,-1),
                               columns=self.cols) # concats new data to dataframe
