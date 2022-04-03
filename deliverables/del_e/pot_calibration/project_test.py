@@ -29,6 +29,8 @@ while True:
     time.sleep(1)
     
     GPIO.output(arduino_int0_trig_pin, True)
+    print("hit")
+    time.sleep(1)
     # bg.test_pattern(both=True) # hysteresis correcton test call
     bg.plot_file("circle.json")
     data_coms.stop_listening()
