@@ -25,6 +25,10 @@ void loop() {
     }
   }
 
+  if(Serial.available()>0){
+    serialEvent();
+  }
+
 }
 
 // Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv

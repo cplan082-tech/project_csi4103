@@ -40,7 +40,7 @@ class BrachioGraphError(BrachioGraph):
         elbow_angle_anchor = angle_2
         error_eps = 1
 
-         def set_angles_wrapped(self, angle_1, angle_2):
+        def set_angles_wrapped(self, angle_1, angle_2):
             """Moves the servo motors to the specified angles immediately. Relies upon getting accurate pulse-width
             values.
             Calls set_pulse_widths().

@@ -11,5 +11,4 @@ while True:
     bg.plot_file("circle.json")
     
     bg.park()
-    i+=1
     
