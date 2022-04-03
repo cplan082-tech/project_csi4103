@@ -35,8 +35,8 @@ class data_collection:
         try:
             data = [(float(self.ser.readline().decode('utf-8').rstrip())) for _ in range(len(self.cols))]
         except:
-           self.ser.reset_input_buffer() 
-#             data = [None for _ in range(len(self.cols))]
+            self.ser.reset_input_buffer() 
+            data = [None for _ in range(len(self.cols))]
 #         print(data)
         df_temp = pd.DataFrame(np.array(data).reshape(1,-1),
                               columns=self.cols) # concats new data to dataframe
