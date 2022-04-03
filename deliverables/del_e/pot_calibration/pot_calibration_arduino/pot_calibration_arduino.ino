@@ -19,7 +19,7 @@ void loop() {
     digitalWrite(ledPin, HIGH); // visual indication (button has been pressed)
     Serial.println(analogRead(shoulder_pin));
     Serial.println(analogRead(elbow_pin));
-    delay(1000); // Controls flow of captured datapoints
+    //delay(1000); // Controls flow of captured datapoints
   }
   else{
     digitalWrite(ledPin, LOW);// visual indication (button has NOT been pressed)
