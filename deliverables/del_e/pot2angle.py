@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import math
 
 
@@ -6,27 +8,35 @@ maxpotrange = 1023 # [(2**10)-1], Uncomment if connecting to 5V terminal on Ardu
 #maxpotrange = 675 # [(2**10)*(3.3/5)-1], Uncomment if connecting to 3.3V terminal on Arduino
 minangle = 0 # Set minimum angle of the potentiometers (if nessesary)
 maxangle = 300 # Max angle of the potentiometers (B10kΩ has a turn angle of 300 degrees)
-shoulder_modifier = 0 # Linear adjustment (set after calibration)
-elbow_modifier = 0
+shoulder_modifier = -168 # Linear adjustment (set after calibration)
+elbow_modifier = -56
 
 #def pot2angle(potinput):
 #	return potinput * (maxangle - minangle) / maxpotrange + modifier
 
-def shoulder_motor_angle(shoulder_pot):
-	return shoulder_pot * (maxangle - minangle) / maxpotrange + shoulder_modifier
+#def shoulder_motor_angle(shoulder_pot):
+#	return shoulder_pot * (maxangle - minangle) / maxpotrange + shoulder_modifier
 
 
-def inner_angle(shoulder_pot):
-	return shoulder_pot * (maxangle - minangle) / maxpotrange + shoulder_modifier
+#def inner_angle(shoulder_pot):
+#	return shoulder_pot * (maxangle - minangle) / maxpotrange + shoulder_modifier
 
 
-def hypotenuse_angle(shoulder_pot):
-	return shoulder_pot * (maxangle - minangle) / maxpotrange + shoulder_modifier
+#def hypotenuse_angle(shoulder_pot):
+#	return shoulder_pot * (maxangle - minangle) / maxpotrange + shoulder_modifier
 
 
-def elbow_angle(elbow_pot):
-	return elbow_pot * (maxangle - minangle) / maxpotrange + elbow_modifier
+#def elbow_angle(elbow_pot):
+#	return elbow_pot * (maxangle - minangle) / maxpotrange + elbow_modifier
 
 
-def elbow_motor_angle(elbow_pot):
-	return 180 - (elbow_pot * (maxangle - minangle) / maxpotrange + elbow_modifier)
+#def elbow_motor_angle(elbow_pot):
+#	return 180 - (elbow_pot * (maxangle - minangle) / maxpotrange + elbow_modifier)
+
+
+def pot2angle(shoulder_pot, elbow_pot):
+	return (maxpotrange - shoulder_pot) * (maxangle - minangle) / maxpotrange + shoulder_modifier, elbow_pot * (maxangle - minangle) / maxpotrange + elbow_modifier
+
+
+print(pot2angle(209,492))
+print(pot2angle(214,501))
