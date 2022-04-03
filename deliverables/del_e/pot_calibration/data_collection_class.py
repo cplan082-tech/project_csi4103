@@ -3,20 +3,31 @@ import RPi.GPIO as gpio
 import time
 import pandas as pd
 import threading
+import sys
 import numpy as np
 
 class data_collection:
-    def __init__(self, coms_chan, ouput_csv, cols):
+    def __init__(self, coms_chan, ouput_csv, cols, ser_delay=3):
+        self.ser_delay = ser_delay
         self.ouput_csv = ouput_csv # name of output csv file
+        time.sleep(1) # prevents serial connection from reading "" when called repetedly
         self.ser = serial.Serial(coms_chan, 9600, timeout=30) # establish comms connection
         self.lock = threading.Lock() # Create thread locking object
         self.cols = cols
         self.df = pd.DataFrame(columns=cols) # creates empty dataframe
+        print("\n")
         print('starting comms thread, please wait')
+#         self.ser.reset_input_buffer() # resets input buffer before starting thread
         self.running = True # used to enable or disable the thread (when True, loops to infinity)
         self.listen_thread = threading.Thread(target=self.waiting_for_data)
         self.listen_thread.start() # starts thread
-        time.sleep(3) # Gives time for data_coms to initialise
+        for _ in range(30):
+            sys.stdout.write(".")
+            sys.stdout.flush()
+#             print(".")
+            time.sleep(self.ser_delay/30)
+        print("\nComms thread started")
+        print("\n")
         
     def pack_data(self):
         self.lock.acquire() # prevents thread from terminating during data aquisition
@@ -43,7 +54,11 @@ class data_collection:
         self.df.to_csv(self.ouput_csv, index=False) # converts dataframe to csv
         print('data converted to csv')
         self.running = False # terminated comms thread
-        print('Comms thread terminated')
+        print("\n")
+#         print("Terminating comms thread, please wait")
         self.lock.release()
+#         time.sleep(self.ser_delay)
+        print('Comms thread terminated')
+        print("\n")
                 
                 
