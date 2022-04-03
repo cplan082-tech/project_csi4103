@@ -30,11 +30,12 @@ while True:
     time.sleep(1)
     
     GPIO.output(arduino_int0_trig_pin, True)
-    bg.test_pattern(both=True) # hysteresis correcton test call
+    # bg.test_pattern(both=True) # hysteresis correcton test call
+    bg.plot_file("circle.json")
     GPIO.output(arduino_int0_trig_pin, False)
     data_coms.stop_listening()
     
     bg.park()
     i+=1
     
-    # bg.plot_file("circle.json")
+   
