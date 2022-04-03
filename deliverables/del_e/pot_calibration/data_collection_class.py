@@ -1,5 +1,5 @@
 import serial
-import RPi.GPIO as gpio
+# import RPi.GPIO as gpio
 import time
 import pandas as pd
 import threading
