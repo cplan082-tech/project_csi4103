@@ -17,7 +17,7 @@ GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
 GPIO.output(arduino_int0_trig_pin, False)
 
 csv_name = 'hyster_dataset_clean'
-i = 1
+i = 2
 
 while True:
     input("start test")
@@ -30,8 +30,8 @@ while True:
     
     GPIO.output(arduino_int0_trig_pin, True)
     time.sleep(1)
-#     bg.test_pattern(both=True) # hysteresis correcton test call
-    bg.plot_file("circle.json")
+    bg.test_pattern(both=True) # hysteresis correcton test call
+#    bg.plot_file("circle.json")
     data_coms.stop_listening()
     GPIO.output(arduino_int0_trig_pin, False)
     
