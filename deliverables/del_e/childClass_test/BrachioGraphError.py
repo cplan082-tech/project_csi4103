@@ -108,8 +108,8 @@ class BrachioGraphError(BrachioGraph):
         elbow_pot = lst_angles[1]
         
         # calculate error
-        shoulder_error  = shoulder_angle_anchor - shoulder_pot
-        elbow_error = elbow_angle_anchor - elbow_pot
+        shoulder_error  = abs(shoulder_angle_anchor - shoulder_pot)
+        elbow_error = abs(elbow_angle_anchor - elbow_pot)
 
         #set variables for P controller
         shoulder_angle = shoulder_angle_anchor
@@ -119,10 +119,10 @@ class BrachioGraphError(BrachioGraph):
         while (shoulder_error > error_eps or elbow_error > error_eps):
             time.sleep(1)
 
-            if (shoulder_error > abs(error_eps)):
+            if (shoulder_error > error_eps):
                 shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
 
-            if (elbow_error > abs(error_eps)):
+            if (elbow_error > error_eps):
                 elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
 
             self.set_angles_wrapped(shoulder_angle, elbow_angle)
@@ -143,5 +143,5 @@ class BrachioGraphError(BrachioGraph):
             print(f'Elbow pot angle: {elbow_pot}\n')
 
             # calculate error
-            shoulder_error  = shoulder_angle_anchor - shoulder_pot
-            elbow_error = elbow_angle_anchor - elbow_pot
+            shoulder_error  = abs(shoulder_angle_anchor - shoulder_pot)
+            elbow_error = abs(elbow_angle_anchor - elbow_pot)
