@@ -11,27 +11,79 @@ obj_arm = arm.arm_angle_collection()
 
 from brachiograph import BrachioGraph
 
-class BrachioGraphError(BrachioGraph):
+def map_func(x, in_min, in_max, out_min, out_max):
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-    def map_func(x, in_min, in_max, out_min, out_max):
-        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=865, elbow_max=261,
+              shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=145):
     
-    def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=865, elbow_max=261,
-                  shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=145):
-        
-        # convertes first column (shoulder) to angles between -90 and 0
-        lst[0] = map_func(lst[0], shoulder_min, soulder_max, shoulder_min_angle, shoudler_max_angle)
-        
-        # convertes second column (elbow) to angles between 0 and 160
-        lst[1] = map_func(lst[1], elbow_min, elbow_max, elbow_min_angle, elbow_max_angle)
-        return lst
+    # convertes first column (shoulder) to angles between -90 and 0
+    lst[0] = map_func(lst[0], shoulder_min, soulder_max, shoulder_min_angle, shoudler_max_angle)
     
-    def proportional_controller(set_point, process_variable):
-         Kp = 0.1 #proportional gain
-         error = set_point - process_variable
-         output = Kp * error
-         return output
-         
+    # convertes second column (elbow) to angles between 0 and 160
+    lst[1] = map_func(lst[1], elbow_min, elbow_max, elbow_min_angle, elbow_max_angle)
+    return lst
+
+def proportional_controller(set_point, process_variable):
+     Kp = 0.1 #proportional gain
+     error = set_point - process_variable
+     output = Kp * error
+     return output
+
+class BrachioGraphError(BrachioGraph):      
+
+    def set_angles_wrapped(self, angle_1, angle_2):
+        """Moves the servo motors to the specified angles immediately. Relies upon getting accurate pulse-width
+        values.
+        Calls set_pulse_widths().
+        Sets current_x, current_y.
+        """
+
+        pw_1 = pw_2 = None
+
+        if angle_1 is not None:
+            pw_1 = self.angles_to_pw_1(angle_1)
+
+            if pw_1 > self.previous_pw_1:
+                self.active_hysteresis_correction_1 = self.hysteresis_correction_1
+            elif pw_1 < self.previous_pw_1:
+                self.active_hysteresis_correction_1 = - self.hysteresis_correction_1
+
+            self.previous_pw_1 = pw_1
+
+            pw_1 = pw_1 + self.active_hysteresis_correction_1
+
+            self.angle_1 = angle_1
+            self.angles_used_1.add(int(angle_1))
+            self.pulse_widths_used_1.add(int(pw_1))
+
+        if angle_2 is not None:
+            pw_2 = self.angles_to_pw_2(angle_2)
+
+            if pw_2 > self.previous_pw_2:
+                self.active_hysteresis_correction_2 = self.hysteresis_correction_2
+            elif pw_2 < self.previous_pw_2:
+                self.active_hysteresis_correction_2 = - self.hysteresis_correction_2
+
+            self.previous_pw_2 = pw_2
+
+            pw_2 = pw_2 + self.active_hysteresis_correction_2
+
+            self.angle_2 = angle_2
+            self.angles_used_2.add(int(angle_2))
+            self.pulse_widths_used_2.add(int(pw_2))
+
+        if self.turtle:
+
+            x, y = self.angles_to_xy(self.angle_1, self.angle_2)
+
+            self.turtle.setx(x * self.turtle.multiplier)
+            self.turtle.sety(y * self.turtle.multiplier)
+
+        self.set_pulse_widths(pw_1, pw_2)
+        self.x, self.y = self.angles_to_xy(self.angle_1, self.angle_2)
+
+        return
 
     #Modified to use error correction
     def set_angles(self, angle_1=None, angle_2=None):
@@ -40,62 +92,9 @@ class BrachioGraphError(BrachioGraph):
         elbow_angle_anchor = angle_2
         error_eps = 1
 
-        def set_angles_wrapped(self, angle_1, angle_2):
-            """Moves the servo motors to the specified angles immediately. Relies upon getting accurate pulse-width
-            values.
-            Calls set_pulse_widths().
-            Sets current_x, current_y.
-            """
-
-            pw_1 = pw_2 = None
-
-            if angle_1 is not None:
-                pw_1 = self.angles_to_pw_1(angle_1)
-
-                if pw_1 > self.previous_pw_1:
-                    self.active_hysteresis_correction_1 = self.hysteresis_correction_1
-                elif pw_1 < self.previous_pw_1:
-                    self.active_hysteresis_correction_1 = - self.hysteresis_correction_1
-
-                self.previous_pw_1 = pw_1
-
-                pw_1 = pw_1 + self.active_hysteresis_correction_1
-
-                self.angle_1 = angle_1
-                self.angles_used_1.add(int(angle_1))
-                self.pulse_widths_used_1.add(int(pw_1))
-
-            if angle_2 is not None:
-                pw_2 = self.angles_to_pw_2(angle_2)
-
-                if pw_2 > self.previous_pw_2:
-                    self.active_hysteresis_correction_2 = self.hysteresis_correction_2
-                elif pw_2 < self.previous_pw_2:
-                    self.active_hysteresis_correction_2 = - self.hysteresis_correction_2
-
-                self.previous_pw_2 = pw_2
-
-                pw_2 = pw_2 + self.active_hysteresis_correction_2
-
-                self.angle_2 = angle_2
-                self.angles_used_2.add(int(angle_2))
-                self.pulse_widths_used_2.add(int(pw_2))
-
-            if self.turtle:
-
-                x, y = self.angles_to_xy(self.angle_1, self.angle_2)
-
-                self.turtle.setx(x * self.turtle.multiplier)
-                self.turtle.sety(y * self.turtle.multiplier)
-
-            self.set_pulse_widths(pw_1, pw_2)
-            self.x, self.y = self.angles_to_xy(self.angle_1, self.angle_2)
-
-            return
-
 
         # calls get_angle for the first time
-        set_angles_wrapped(angle_1, angle_2)
+        self.set_angles_wrapped(angle_1, angle_2)
         
         # get pot values
         shoulder_pot, elbow_pot = obj_arm.angle_request()
@@ -124,7 +123,7 @@ class BrachioGraphError(BrachioGraph):
                 if (shoulder_error > error_eps):
                     elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
 
-                set_angles_wrapped(shoulder_angle, elbow_angle)
+                self.set_angles_wrapped(shoulder_angle, elbow_angle)
                 
                 # get pot values
                 shoulder_pot, elbow_pot = obj_arm.angle_request()
