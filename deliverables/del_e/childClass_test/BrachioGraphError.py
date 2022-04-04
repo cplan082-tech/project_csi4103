@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 sys.path.append(os.path.realpath('../../../base_project'))
 sys.path.append(os.path.realpath('../comms'))
@@ -25,7 +26,7 @@ def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=865, elbow_max=2
     return lst
 
 def proportional_controller(set_point, process_variable):
-     Kp = 0.1 #proportional gain
+     Kp = 0.005 #proportional gain
      error = set_point - process_variable
      output = Kp * error
      return output
@@ -116,11 +117,14 @@ class BrachioGraphError(BrachioGraph):
 
         # determine if error is acceptable (for now, test with 1 degree error maximum)
         while (shoulder_error > error_eps or elbow_error > error_eps):
+            time.sleep(0.5)
+            print(f'Shoulder: {shoulder_error}')
+            print(f'Elbow: {shoulder_error}')
 
                 if (shoulder_error > error_eps):
                     shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
 
-                if (shoulder_error > error_eps):
+                if (elbow_error > error_eps):
                     elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
 
                 self.set_angles_wrapped(shoulder_angle, elbow_angle)
