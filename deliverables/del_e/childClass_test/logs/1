@@ -1,0 +1,55 @@
+<pre>Shoulder angle: -89.11363636363637
+Elbow angle: 28.721026490066254
+Shoulder pot angle: -91.36363636363636
+Elbow pot angle: 93.62582781456953
+
+Shoulder angle anckor: -90
+Elbow angle anckor: 90
+Shoulder angle: -89.11363636363637
+Elbow angle: 28.3584437086093
+Shoulder pot angle: -91.36363636363636
+Elbow pot angle: 92.66556291390728
+
+Shoulder angle anckor: -90
+Elbow angle anckor: 90
+Shoulder angle: -89.11363636363637
+Elbow angle: 28.091887417218572
+Shoulder pot angle: -91.36363636363636
+Elbow pot angle: 92.18543046357615
+
+Shoulder angle anckor: -90
+Elbow angle anckor: 90
+Shoulder angle: -89.11363636363637
+Elbow angle: 27.873344370860956
+Shoulder pot angle: -91.13636363636364
+Elbow pot angle: 92.18543046357615
+
+Shoulder angle anckor: -90
+Elbow angle anckor: 90
+Shoulder angle: -89.11363636363637
+Elbow angle: 27.65480132450334
+Shoulder pot angle: -91.13636363636364
+Elbow pot angle: 90.98509933774834
+
+------------------------------------------
+                      | Servo 1 | Servo 2 
+                      | Shoulder| Elbow   
+----------------------|---------|---------
+          pulse-width |    1516 |     876
+                angle |     -89 |      28
+hysteresis correction |     0.0 |     0.0
+------------------------------------------
+         x/y location |   -19.7 |     5.4
+
+------------------------------------------
+pen: down
+------------------------------------------
+bottom left: (-6, 11) top right: (6, 20)
+------------------------------------------
+start test^CTraceback (most recent call last):
+  File &quot;/home/pi/project_csi4103/deliverables/del_e/childClass_test/project_test.py&quot;, line 7, in &lt;module&gt;
+    input(&quot;start test&quot;)
+KeyboardInterrupt
+
+<font color="#26A269"><b>pi@raspberrypi</b></font>:<font color="#12488B"><b>~/project_csi4103/deliverables/del_e/childClass_test $</b></font> python3 project_test.py 
+</pre>
