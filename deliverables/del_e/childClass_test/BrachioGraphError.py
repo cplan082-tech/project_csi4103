@@ -15,7 +15,10 @@ from brachiograph import BrachioGraph
 def map_func(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=650, elbow_max=50,
+# houlder_min=203, soulder_max=599, elbow_min=650, elbow_max=50,
+# shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=150
+
+def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=600, elbow_max=50,
               shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=150):
     
     # convertes first column (shoulder) to angles between -90 and 0
@@ -136,11 +139,13 @@ class BrachioGraphError(BrachioGraph):
             elbow_pot = lst_angles[1]
             
             print(f'Shoulder angle anckor: {shoulder_angle_anchor}')
-            print(f'Elbow angle anckor: {elbow_angle_anchor}')
-            print(f'Shoulder angle: {shoulder_angle}')
-            print(f'Elbow angle: {elbow_angle}')
             print(f'Shoulder pot angle: {shoulder_pot}')
+            print(f'Shoulder angle: {shoulder_angle}')
+            print("=================================================")
+            print(f'Elbow angle anckor: {elbow_angle_anchor}')
             print(f'Elbow pot angle: {elbow_pot}\n')
+            print(f'Elbow angle: {elbow_angle}')
+            
 
             # calculate error
             shoulder_error  = abs(shoulder_angle_anchor - shoulder_pot)
