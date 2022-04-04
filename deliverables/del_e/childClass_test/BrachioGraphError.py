@@ -119,10 +119,10 @@ class BrachioGraphError(BrachioGraph):
         while (shoulder_error > error_eps or elbow_error > error_eps):
             time.sleep(1)
 
-            if (shoulder_error > error_eps):
+            if (shoulder_error > abs(error_eps)):
                 shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
 
-            if (elbow_error > error_eps):
+            if (elbow_error > abs(error_eps)):
                 elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
 
             self.set_angles_wrapped(shoulder_angle, elbow_angle)
