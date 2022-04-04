@@ -5,10 +5,10 @@
 
 # from BrachioGraphError import BrachioGraphError
 import time
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import data_collection_class as dc
 from custom import bg
-arduino_int0_trig_pin = 4
+#arduino_int0_trig_pin = 4
 bg.park()
 
 #GPIO.setwarnings(False)
@@ -16,8 +16,8 @@ bg.park()
 #GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
 #GPIO.output(arduino_int0_trig_pin, False)
 
-csv_name = 'hyster_dataset_clean'
-i = 1
+#csv_name = 'hyster_dataset_clean'
+#i = 1
 
 #while True:
 #    input("start test")
