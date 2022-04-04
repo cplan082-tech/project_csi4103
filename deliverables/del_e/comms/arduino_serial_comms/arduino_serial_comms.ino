@@ -21,6 +21,11 @@ void loop() {
     if(inputString.startsWith("Status")){
       Serial.println(analogRead(pin_shoulder));
       Serial.println(analogRead(pin_elbow));
+      inputString = "";
+      stringComplete = false;
+    }
+    else{
+      inputString = "";
       stringComplete = false;
     }
   }
