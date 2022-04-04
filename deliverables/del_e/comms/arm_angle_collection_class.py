@@ -16,6 +16,7 @@ class arm_angle_collection:
                 self.ser.write(msg_b + b'\n')
                 time.sleep(0.1)
                 self.shoulder = int(self.ser.readline().decode("utf-8").strip())
+                time.sleep(0.05)
                 self.elbow = int(self.ser.readline().decode("utf-8").strip())
                 flag = True
                 
