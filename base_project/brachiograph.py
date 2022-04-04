@@ -233,8 +233,8 @@ class BrachioGraph:
             x, y = line[0]
 
             # only if we are not within 1mm of the start of the line, lift pen and go there
-            if (round(self.x, 1), round(self.y, 1)) != (round(x, 1), round(y, 1)):
-                self.xy(x, y, wait=wait, interpolate=interpolate)
+#             if (round(self.x, 1), round(self.y, 1)) != (round(x, 1), round(y, 1)):
+#                 self.xy(x, y, wait=wait, interpolate=interpolate)
 
             for point in tqdm.tqdm(line[1:], desc="Segments", leave=False):
                 x, y = point
