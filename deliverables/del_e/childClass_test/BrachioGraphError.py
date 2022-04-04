@@ -121,22 +121,22 @@ class BrachioGraphError(BrachioGraph):
             print(f'Shoulder: {shoulder_error}')
             print(f'Elbow: {shoulder_error}')
 
-                if (shoulder_error > error_eps):
-                    shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
+            if (shoulder_error > error_eps):
+                shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
 
-                if (elbow_error > error_eps):
-                    elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
+            if (elbow_error > error_eps):
+                elbow_angle = elbow_angle + proportional_controller(elbow_angle_anchor,elbow_pot)
 
-                self.set_angles_wrapped(shoulder_angle, elbow_angle)
-                
-                # get pot values
-                shoulder_pot, elbow_pot = obj_arm.angle_request()
-                
-                # convert pot ADC values to angles
-                lst_angles = adc2angle([shoulder_pot, elbow_pot])
-                shoulder_pot = lst_angles[0]
-                elbow_pot = lst_angles[1]
+            self.set_angles_wrapped(shoulder_angle, elbow_angle)
+            
+            # get pot values
+            shoulder_pot, elbow_pot = obj_arm.angle_request()
+            
+            # convert pot ADC values to angles
+            lst_angles = adc2angle([shoulder_pot, elbow_pot])
+            shoulder_pot = lst_angles[0]
+            elbow_pot = lst_angles[1]
 
-                # calculate error
-                shoulder_error  = shoulder_angle_anchor - shoulder_pot
-                elbow_error = elbow_angle_anchor - elbow_pot
+            # calculate error
+            shoulder_error  = shoulder_angle_anchor - shoulder_pot
+            elbow_error = elbow_angle_anchor - elbow_pot
