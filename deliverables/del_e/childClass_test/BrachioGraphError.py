@@ -120,7 +120,7 @@ class BrachioGraphError(BrachioGraph):
 
         # determine if error is acceptable (for now, test with 1 degree error maximum)
         while (shoulder_error > error_eps or elbow_error > error_eps):
-            time.sleep(0.5)
+            time.sleep(0.1)
 
             if (shoulder_error > error_eps):
                 shoulder_angle = shoulder_angle + proportional_controller(shoulder_angle_anchor,shoulder_pot)
