@@ -9,7 +9,7 @@ import time
 import data_collection_class as dc
 #from custom import bg
 csv_name = 'pot_cal_dataset_clean'
-i = 2
+i = 3
 
 
 data_coms = dc.data_collection('/dev/ttyACM0',
