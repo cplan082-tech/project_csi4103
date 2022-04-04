@@ -5,7 +5,7 @@ sys.path.append(os.path.realpath('../../../base_project'))
 sys.path.append(os.path.realpath('../comms'))
 
 import arm_angle_collection_class as arm # path might be wrong
-import pot2angle # path might be wrong
+
 
 obj_arm = arm.arm_angle_collection()
 
@@ -34,7 +34,7 @@ class BrachioGraphError(BrachioGraph):
          
 
     #Modified to use error correction
-    def set_angles(self, angle_1 = None, angle_2=None):
+    def set_angles(self, angle_1=None, angle_2=None):
 
         shoulder_angle_anchor = angle_1
         elbow_angle_anchor = angle_2
