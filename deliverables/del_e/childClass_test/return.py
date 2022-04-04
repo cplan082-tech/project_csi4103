@@ -4,13 +4,13 @@
 # sys.path.append(os.path.realpath('../../../base_project'))
 
 # from BrachioGraphError import BrachioGraphError
-import time
+#import time
 #import RPi.GPIO as GPIO
-import data_collection_class as dc
+#import data_collection_class as dc
 from custom import bg
 #arduino_int0_trig_pin = 4
 bg.park()
-
+input("park() complete")
 #GPIO.setwarnings(False)
 #GPIO.setmode(GPIO.BCM)
 #GPIO.setup(arduino_int0_trig_pin, GPIO.OUT)
@@ -38,3 +38,4 @@ bg.park()
 #    i+=1
     
     # bg.plot_file("circle.json")
+exit

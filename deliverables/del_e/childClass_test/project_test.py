@@ -8,7 +8,7 @@ while True:
     
     bg.park()
     time.sleep(1)
-    bg.plot_file("arc.json")
-    
+#    bg.plot_file("arc.json")
+    bg.test_pattern(reverse=True)
     bg.park()
     
