@@ -8,7 +8,7 @@ sys.path.append(os.path.realpath('../comms'))
 import arm_angle_collection_class as arm # path might be wrong
 
 
-obj_arm = arm.arm_angle_collection(coms_chan='/dev/ttyACM1')
+obj_arm = arm.arm_angle_collection(coms_chan='/dev/ttyACM0')
 
 from brachiograph import BrachioGraph
 

@@ -14,16 +14,17 @@ class arm_angle_collection:
                 self.ser.reset_input_buffer()
                 msg_b = bytes("Status", 'utf-8')
                 self.ser.write(msg_b + b'\n')
-                time.sleep(0.1)
+#                time.sleep(0.1)
                 self.shoulder = int(self.ser.readline().decode("utf-8").strip())
-                time.sleep(0.05)
+#                time.sleep(0.05)
                 self.elbow = int(self.ser.readline().decode("utf-8").strip())
                 flag = True
                 
             except:
                 flag = False
-                time.sleep(0.1)
+#                time.sleep(0.1)
                 print("comms error detected!")
+                time.sleep(0.5)
         
         return self.shoulder, self.elbow
         
