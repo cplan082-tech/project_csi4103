@@ -18,8 +18,8 @@ def map_func(x, in_min, in_max, out_min, out_max):
 # houlder_min=203, soulder_max=599, elbow_min=650, elbow_max=50,
 # shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=150
 
-def adc2angle(lst, shoulder_min=203, soulder_max=590, elbow_min=550, elbow_max=50,
-              shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=150):
+def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=550, elbow_max=50,
+              shoulder_min_angle =-90, shoudler_max_angle=10, elbow_min_angle=0, elbow_max_angle=150):
     
     # convertes first column (shoulder) to angles between -90 and 0
     lst[0] = map_func(lst[0], shoulder_min, soulder_max, shoulder_min_angle, shoudler_max_angle)
