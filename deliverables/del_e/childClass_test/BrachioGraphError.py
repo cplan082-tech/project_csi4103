@@ -15,8 +15,8 @@ from brachiograph import BrachioGraph
 def map_func(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=865, elbow_max=261,
-              shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=145):
+def adc2angle(lst, shoulder_min=203, soulder_max=599, elbow_min=650, elbow_max=50,
+              shoulder_min_angle =-90, shoudler_max_angle=0, elbow_min_angle=0, elbow_max_angle=150):
     
     # convertes first column (shoulder) to angles between -90 and 0
     lst[0] = map_func(lst[0], shoulder_min, soulder_max, shoulder_min_angle, shoudler_max_angle)
