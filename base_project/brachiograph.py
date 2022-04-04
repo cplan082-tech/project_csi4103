@@ -476,6 +476,7 @@ class BrachioGraph:
 
     def xy(self, x=None, y=None, wait=0, interpolate=10, draw=False):
         """Moves the pen to the xy position; optionally draws while doing it."""
+        print(f'Draw: {draw}')
 
         wait = wait or self.wait
 
