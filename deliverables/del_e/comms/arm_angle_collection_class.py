@@ -8,23 +8,22 @@ class arm_angle_collection:
         self.ser = serial.Serial(coms_chan, baud, timeout=timeout_val) # establish comms connection
         
     def angle_request(self):
-        flag = False
+        # Lets program know that a data comms error occured
+        flag = False  # false when error occurs and true when no error occurs
         while(not(flag)):
             try:
                 self.ser.reset_input_buffer()
-                msg_b = bytes("Status", 'utf-8')
-                self.ser.write(msg_b + b'\n')
-#                time.sleep(0.1)
+                # initiates a data transfer between Arduino and RPi
+                msg_b = bytes("Status", 'utf-8') # taken from lab 6
+                self.ser.write(msg_b + b'\n') # taken from lab 6
                 self.shoulder = int(self.ser.readline().decode("utf-8").strip())
-#                time.sleep(0.05)
                 self.elbow = int(self.ser.readline().decode("utf-8").strip())
-                flag = True
+                flag = True # Lets program know that no data comms errors occured
                 
             except:
-                flag = False
-#                time.sleep(0.1)
+                flag = False # Lets program know that a data comms error occured
                 print("comms error detected!")
-                time.sleep(0.5)
+                time.sleep(0.5) # Slows data flow to prevent further lock ups.
         
         return self.shoulder, self.elbow
         
