@@ -1,5 +1,5 @@
-int pin_shoulder = A0;
-int pin_elbow = A1;
+int pin_shoulder = A0; // analog pot pin for shoulder servo
+int pin_elbow = A1; // analog pot pin for elbow servo
 
 // Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 String inputString = ""; // initialisation of input string variable
@@ -10,30 +10,31 @@ void setup() {
   pinMode(pin_shoulder, INPUT);
   pinMode(pin_elbow, INPUT);
   Serial.begin(9600); // start serial communications
+  // Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   while(!Serial){ // wait for reial communications between arduino and pi to be established
     ;
   }
+  // reused from lab 6^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 }
 
 void loop() {
   if(stringComplete){
-    if(inputString.startsWith("Status")){
+    if(inputString.startsWith("Status")){ // Reused from lab6
       Serial.println(analogRead(pin_shoulder));
       Serial.println(analogRead(pin_elbow));
-      inputString = "";
-      stringComplete = false;
     }
-    else{
-      inputString = "";
-      stringComplete = false;
-    }
+    // Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    inputString = ""; // Resets input string
+    stringComplete = false; // Resets input flag
+    // reused from lab 6^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   }
 
+// Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   if(Serial.available()>0){
     serialEvent();
   }
-
+// reused from lab 6^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 }
 
 // Reused from lab6vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
